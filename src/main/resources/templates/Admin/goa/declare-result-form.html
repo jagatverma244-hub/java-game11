@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Declare Game Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 18px;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff;
+            width: 100%;
+            max-width: 400px;
+            animation: pulse-glow 5s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 20px #0ff; }
+            50% { box-shadow: 0 0 30px #00e6e6; }
+            100% { box-shadow: 0 0 20px #0ff; }
+        }
+
+        .result-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #00e6e6;
+            text-shadow: 0 0 6px #0ff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 6px;
+            background: #111;
+            color: #0ff;
+            font-size: 14px;
+            box-shadow: inset 0 0 5px #0ff;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        .btn {
+            background-color: #0ff;
+            color: #000;
+            padding: 14px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s ease;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #00cccc;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        @media (max-width: 480px) {
+            .result-container {
+                padding: 25px;
+                border-radius: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="result-container">
+    <h2>Declare Game Result</h2>
+    <form th:action="@{/admin/goadeclare-result}" method="post">
+        <div class="form-group">
+            <label for="winningNumber">Winning Number (00–99):</label>
+            <input type="text" id="winningNumber" name="winningNumber"
+                   pattern="^[0-9]{2}$" maxlength="2" required placeholder="00 - 99" />
+        </div>
+        <button type="submit" class="btn">Declare</button>
+    </form>
+</div>
+</body>
+</html>

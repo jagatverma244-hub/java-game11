@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Refer & Earn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f2fe;
+            margin-bottom: 20px;
+        }
+
+        .ref-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        .ref-code {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: #00f2fe;
+            word-break: break-word;
+        }
+
+        .btn {
+            background: #00f2fe;
+            color: black;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0 0 10px #00f2fe;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #00c3cc;
+            box-shadow: 0 0 14px #00f2fe;
+        }
+
+        .share-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .btn {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            .ref-code {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Refer & Earn</h1>
+
+<div class="ref-box">
+    <p>अपना रेफरल कोड शेयर करें और दोस्तों को जोड़ें!</p>
+    <div class="ref-code" id="refCode" th:text="${user.referralCode}">REF12345</div>
+
+    <button class="btn copy-btn" onclick="copyReferral()">Copy Code</button>
+
+    <div class="share-links">
+        <a class="btn" id="whatsappShare" target="_blank">WhatsApp</a>
+        <a class="btn" id="instagramShare" target="_blank">Instagram</a>
+        <a class="btn" id="telegramShare" target="_blank">Telegram</a>
+        <a class="btn" id="facebookShare" target="_blank">Facebook</a>
+    </div>
+
+    <a href="/home/homepage" class="btn back-btn">⬅️ Back to Home</a>
+</div>
+
+<script>
+    function copyReferral() {
+        const refCode = document.getElementById("refCode").innerText;
+        navigator.clipboard.writeText(refCode).then(() => {
+            alert("Referral Code copied!");
+        });
+    }
+
+    const refCode = document.getElementById("refCode").innerText;
+    const message = encodeURIComponent("Join RoomStack and use my referral code: " + refCode + " to earn rewards!");
+
+    document.getElementById("whatsappShare").href = `https://wa.me/?text=${message}`;
+    document.getElementById("telegramShare").href = `https://t.me/share/url?url=&text=${message}`;
+    document.getElementById("facebookShare").href = `https://www.facebook.com/sharer/sharer.php?u=https://roomstack.in&quote=${message}`;
+    document.getElementById("instagramShare").href = `https://www.instagram.com/`; // Instagram doesn't allow direct sharing with message
+</script>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .wallet-box {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #00f0ff, #0088aa);
+            padding: 15px 30px;
+            border-radius: 15px;
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00f0ff;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #00f0ff;
+        }
+
+        .profile-item {
+            margin-bottom: 20px;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #ccc;
+        }
+
+        .profile-value {
+            color: #fff;
+            font-size: 18px;
+            word-break: break-word;
+        }
+
+        .copy-referral {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .copy-btn {
+            background-color: #00f0ff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background-color: #00c2d6;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background-color: #00f0ff;
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .action-btn:hover {
+            background-color: #00c2d6;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #00f0ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container" th:if="${userdetails != null}">
+
+
+
+    <h2>User Profile</h2>
+    <div class="wallet-box" th:text="'Wallet: ₹ ' + ${userdetails.walletBalance}">Wallet: ₹ 100.00</div>
+
+    <div class="profile-item">
+        <div class="profile-label">Name:</div>
+        <div class="profile-value" th:text="${userdetails.UName}">User Name</div>
+    </div>
+
+    <div class="profile-item">
+        <div class="profile-label">Email:</div>
+        <div class="profile-value" th:text="${userdetails.UEmail}">user@example.com</div>
+    </div>
+
+    <div class="profile-item">
+        <div class="profile-label">Mobile Number:</div>
+        <div class="profile-value" th:text="${userdetails.mobileNumber}">+91-XXXXXXXXXX</div>
+    </div>
+
+    <div class="profile-item">
+        <div class="profile-label">Referral Code:</div>
+        <div class="copy-referral">
+            <span class="profile-value" id="referralCode" th:text="${userdetails.referralCode}">ABCD1234</span>
+            <button class="copy-btn" onclick="copyReferral()">Copy</button>
+        </div>
+    </div>
+
+<!--    <div class="profile-item">-->
+<!--        <div class="profile-label">Account Created:</div>-->
+<!--        <div class="profile-value" th:text="${#dates.format(userdetails.createdAt, 'dd MMM yyyy HH:mm')}">12 Jul 2025 10:30</div>-->
+<!--    </div>-->
+
+    <div class="action-buttons">
+        <form th:action="@{/payment/deposit}" method="get">
+            <button class="action-btn">Deposit</button>
+        </form>
+        <form th:action="@{/payment/withdraw}" method="get">
+            <button class="action-btn">Withdraw</button>
+        </form>
+    </div>
+
+    <a href="/home/homepage" class="back-btn">← Go to Home</a>
+</div>
+
+
+<script>
+    function copyReferral() {
+        const code = document.getElementById("referralCode").innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            alert("Referral code copied!");
+        });
+    }
+</script>
+</body>
+</html>
+
+
+

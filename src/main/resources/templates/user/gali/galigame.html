@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>1 to 100 Betting Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            padding: 30px;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 1px 1px 4px #00f2fe;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-btn, .view-bets-btn {
+            padding: 10px 20px;
+            background-color: #00f2fe;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00f2fe;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background-color: #00c3cc;
+        }
+
+        .view-bets-btn {
+            background-color: #ff4081;
+            color: white;
+            box-shadow: 0 0 8px #ff4081;
+        }
+
+        .view-bets-btn:hover {
+            background-color: #f50057;
+        }
+
+        .message, .error {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .message {
+            color: #00ff99;
+            background-color: rgba(0, 255, 153, 0.1);
+            border: 1px solid #00ff99;
+        }
+
+        .error {
+            color: red;
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid red;
+        }
+
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .number-btn {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #00f2fe;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00f2fe;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .number-btn:hover {
+            background-color: #00c3cc;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #1e1e2f;
+            margin: 15% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 320px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px #00f2fe;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            width: 90%;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .submit-btn, .close-btn {
+            padding: 10px 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            background: #00f2fe;
+            color: black;
+            box-shadow: 0 0 8px #00f2fe;
+        }
+
+        .submit-btn:hover {
+            background: #00c3cc;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+        }
+
+
+        @media (max-width: 768px) {
+            .numbers {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px;
+            }
+
+            .number-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .top-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .back-btn, .view-bets-btn {
+                width: 90%;
+                font-size: 15px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .numbers {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .number-btn {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Choose a Number (0–99)</h2>
+
+<div class="top-actions">
+    <a href="/user/deshboard" class="back-btn">← Back</a>
+    <a href="/gali/galibet" class="back-btn">View My Bets</a>
+    <a href="/gali/galigameharup" class="view-bets-btn">Harup Game</a>
+</div>
+
+<!-- Success or error message -->
+<div th:if="${success}" class="message" th:text="${success}" id="successMsg"></div>
+<div th:if="${error}" class="error" th:text="${error}" id="errorMsg"></div>
+
+<div id="timeErrorMsg" class="error" style="display:none;">Betting is allowed only between 12:00 AM and 11:15 PM.</div>
+
+
+<!-- Number grid -->
+<div class="numbers">
+    <button class="number-btn" th:each="i : ${#numbers.sequence(0,99)}"
+            th:text="${i}"
+            th:onclick="'openModal(' + ${i} + ')'">
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="betModal" class="modal">
+    <div class="modal-content">
+        <h3>Place Your Bet</h3>
+        <form th:action="@{/gali/galiplaceBet}" method="post" th:object="${betRequest}">
+            <input type="hidden" id="selectedNumber" th:field="*{selectedNumber}" />
+            <input type="number" name="amount" th:field="*{amount}" placeholder="Enter amount" required min="1"  max="1000" />
+            <br>
+            <button type="submit" class="submit-btn">Place Bet</button>
+        </form>
+        <button onclick="closeModal()" class="close-btn">Cancel</button>
+    </div>
+</div>
+
+<script>
+    function openModal(number) {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+
+        const isAllowed = (hours < 23 || (hours === 23 && minutes <= 15));
+
+        if (isAllowed) {
+            document.getElementById('betModal').style.display = 'block';
+            document.getElementById('selectedNumber').value = number;
+            document.getElementById('timeErrorMsg').style.display = 'none'; // hide msg if previously shown
+        } else {
+            document.getElementById('timeErrorMsg').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('timeErrorMsg').style.display = 'none';
+            }, 5000); // Hide message after 5 seconds
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('betModal').style.display = 'none';
+    }
+
+    window.onload = function () {
+        const success = document.getElementById("successMsg");
+        const error = document.getElementById("errorMsg");
+
+        if (success) setTimeout(() => success.style.display = "none", 5000);
+        if (error) setTimeout(() => error.style.display = "none", 5000);
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Harup (Under-Bahar) Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            padding: 30px;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 1px 1px 4px #00f2fe;
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: #00f2fe;
+            text-shadow: 1px 1px 3px #00f2fe;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+        }
+
+        .top-actions a {
+            padding: 10px 20px;
+            background-color: #00f2fe;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00f2fe;
+            transition: 0.3s;
+        }
+
+        .top-actions a:hover {
+            background-color: #00c3cc;
+        }
+
+        .message, .error {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            color: #00ff99;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .number-btn {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #00f2fe;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00f2fe;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .number-btn:hover {
+            background-color: #00c3cc;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #1e1e2f;
+            margin: 10% auto;
+            padding: 20px;
+            width: 320px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px #00f2fe;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .submit-btn, .close-btn {
+            padding: 10px 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: #00f2fe;
+            color: black;
+            box-shadow: 0 0 8px #00f2fe;
+        }
+
+        .submit-btn:hover {
+            background: #00c3cc;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Harup Game - Under & Bahar</h2>
+
+<div class="top-actions">
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
+    <a href="/gali/galibet" class="view-bets-btn">View My Bets</a>
+</div>
+
+<!-- Success or error message -->
+<div th:if="${success}" class="message" th:text="${success}"></div>
+<div th:if="${error}" class="error" th:text="${error}"></div>
+<div id="timeErrorMsg" class="error" style="display:none;">Betting is allowed only between 12:00 AM and 11:15 PM.</div>
+
+
+<!-- Bahar digits -->
+<h3>Choose Bahar (First Digit)</h3>
+<div class="numbers">
+    <button class="number-btn" th:each="i : ${#numbers.sequence(0,9)}"
+            th:text="${i}"
+            th:onclick="'openModal(' + ${i} + ', \'BAHAR\')'">
+    </button>
+</div>
+
+<!-- Under digits -->
+<h3>Choose Under (Second Digit)</h3>
+<div class="numbers">
+    <button class="number-btn" th:each="i : ${#numbers.sequence(0,9)}"
+            th:text="${i}"
+            th:onclick="'openModal(' + ${i} + ', \'UNDER\')'">
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="betModal" class="modal">
+    <div class="modal-content">
+        <h3>Place Your Bet</h3>
+        <form th:action="@{/gali/galiplacebetharup}" method="post" th:object="${betRequest}">
+            <input type="hidden" id="selectedDigit" th:field="*{selectedNumber}" />
+            <input type="hidden" id="digitType" th:field="*{type}" />
+            <input type="number" th:field="*{amount}" placeholder="Enter amount" required min="1"  max="1000" />
+            <br>
+            <button type="submit" class="submit-btn">Place Bet</button>
+        </form>
+
+        <button onclick="closeModal()" class="close-btn">Cancel</button>
+    </div>
+</div>
+
+<script>
+    function openModal(number) {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+
+        const isAllowed = (hours < 23 || (hours === 23 && minutes <= 15));
+
+        if (isAllowed) {
+            document.getElementById('betModal').style.display = 'block';
+            document.getElementById('selectedNumber').value = number;
+            document.getElementById('timeErrorMsg').style.display = 'none'; // hide msg if previously shown
+        } else {
+            document.getElementById('timeErrorMsg').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('timeErrorMsg').style.display = 'none';
+            }, 5000); // Hide message after 5 seconds
+        }
+    }
+
+
+    function closeModal() {
+        document.getElementById('betModal').style.display = 'none';
+    }
+
+    // Optional: Close modal if success is present
+    window.onload = function () {
+        const successMsg = /*[[${success != null}]]*/ false;
+        if (successMsg) {
+            closeModal();
+        }
+    };
+</script>
+
+</body>
+</html>
+

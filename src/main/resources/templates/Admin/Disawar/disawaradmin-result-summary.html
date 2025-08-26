@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Result Summary</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00f2fe;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #00f2fe;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #00f2fe;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #00c3cc;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border: 1px solid #00f2fe;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00f2fe;
+            color: black;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            margin: 10px 8px 0;
+            background-color: #00f2fe;
+            color: black;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 0 8px #00f2fe;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #00c3cc;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: left;
+                border: none;
+                border-bottom: 1px solid #00f2fe;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 16px;
+                font-weight: bold;
+                color: #00f2fe;
+            }
+
+            .btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="navbar">
+    <div class="logo">📊 Game Result</div>
+    <div class="nav-links">
+        <a href="/admin/Disawardeclare-result">Back</a>
+        <a href="/admin/Disawarall-bets">All Bets</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Result Summary for Game #<span th:text="${gameResult}">1</span></h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Selected Number</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bet : ${bets}">
+            <td th:text="${bet.user.UName}" data-label="User">User Name</td>
+            <td th:text="${bet.selectedNumber}" data-label="Selected Number">Number</td>
+            <td th:text="${bet.amount}" data-label="Amount">Amount</td>
+            <td th:text="${bet.status}" data-label="Status">Status</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align: center;">
+        <a href="/admin/Disawardeclare-result" class="btn">⬅ Back to Declare Page</a>
+        <a href="/admin/Disawarall-bets" class="btn">📜 View All Bets</a>
+    </div>
+</div>
+
+</body>
+</html>

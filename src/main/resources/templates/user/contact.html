@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Help & Contact</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f2fe;
+            margin-bottom: 30px;
+        }
+
+        .contact-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        .contact-item {
+            margin: 20px 0;
+        }
+
+        .contact-label {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            display: block;
+            color: #00f2fe;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: #00f2fe;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 0 8px #00f2fe;
+            transition: 0.3s;
+        }
+
+        .contact-link:hover {
+            background: #00c3cc;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: #00f2fe;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 8px #00f2fe;
+            text-align: center;
+            width: fit-content;
+        }
+
+        @media screen and (max-width: 600px) {
+            .contact-link, .back-btn {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Help & Contact</h1>
+
+<div class="contact-box">
+    <div class="contact-item">
+        <span class="contact-label">WhatsApp 1:</span>
+        <a href="https://wa.me/918440844739" target="_blank" class="contact-link">Chat on WhatsApp</a>
+    </div>
+    <div class="contact-item">
+        <span class="contact-label">WhatsApp 2:</span>
+        <a href="https://wa.me/918440844739" target="_blank" class="contact-link">Chat on WhatsApp</a>
+    </div>
+    <div class="contact-item">
+        <span class="contact-label">Instagram:</span>
+        <a href="https://instagram.com/your_instagram_id" target="_blank" class="contact-link">@your_instagram_id</a>
+    </div>
+
+    <a href="/home/homepage" class="back-btn">⬅️ Back to Home</a>
+</div>
+
+</body>
+</html>

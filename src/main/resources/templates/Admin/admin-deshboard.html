@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            background: #111;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ffe5;
+            box-shadow: 0 0 20px #00ffe5;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ffe5;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a, .nav-links form {
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: #00ffe5;
+            font-weight: bold;
+            transition: color 0.3s;
+            padding: 8px 15px;
+        }
+
+        .nav-links a:hover {
+            color: #ff00ff;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #00ffe5;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #ff00ff;
+            color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 50px;
+            color: #00ffcc;
+            text-shadow: 2px 2px #ff00ff;
+        }
+
+        .game-section {
+            margin-bottom: 60px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #00ffe5;
+        }
+
+        .game-section:nth-child(odd) {
+            background: linear-gradient(135deg, #111, #0ff);
+        }
+
+        .game-section:nth-child(even) {
+            background: linear-gradient(135deg, #111, #f0f);
+        }
+
+        .game-title {
+            font-size: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px #000;
+        }
+
+        .card-group {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffe5, 0 0 15px #ff00ff;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-top: 0;
+            color: #00ffe5;
+        }
+
+        .card p {
+            color: #ccc;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .card-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 90%;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">🎮 Admin Panel</div>
+    <div class="nav-links">
+        <a href="/admin/declare-result">Declare Result</a>
+        <a href="/admin/all-bets">View Bets</a>
+        <a href="/admin/depositpayment">Deposit</a>
+        <a href="/admin/withdrawpayment">Withdraw</a>
+        <a href="/admin/games">Manage Games</a>
+        <a href="/admin/image">Payment Image</a>
+        <a href="/admin/updatepassword">Update Passwords</a>
+        <form method="get" action="/user/logout" style="display:inline;">
+            <button type="submit" class="btn">Logout</button>
+        </form>
+
+        <a href="/" class="btn">Home</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Welcome, Admin</h1>
+
+    <!-- Game 1 -->
+    <div class="game-section">
+        <div class="game-title">🎯 shri ganesh</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Game 1.</p>
+                <a href="/admin/declare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Game 1 bets history.</p>
+                <a href="/admin/all-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Game 1 schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game 2 -->
+    <div class="game-section">
+        <div class="game-title">🔥 delhi game</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Game 2.</p>
+                <a href="/admin/delhideclare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Game 2 bets history.</p>
+                <a href="/admin/delhiall-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Game 2 schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+
+<!--    goagame---------------------- -->
+    <div class="game-section">
+        <div class="game-title">🔥 Ghaziabad game</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Goa game.</p>
+                <a href="/admin/Goadeclare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Goa game bets history.</p>
+                <a href="/admin/goaall-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Goa game schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--    galigame---------------------- -->
+    <div class="game-section">
+        <div class="game-title">🔥 gali game</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Goa game.</p>
+                <a href="/admin/galideclare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Goa game bets history.</p>
+                <a href="/admin/galiall-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Goa game schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!--    disawargame---------------------- -->
+    <div class="game-section">
+        <div class="game-title">🔥 Disawar game</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Goa game.</p>
+                <a href="/admin/Disawardeclare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Goa game bets history.</p>
+                <a href="/admin/Disawarall-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Goa game schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+<!--faridabad game--------- -->
+    <div class="game-section">
+        <div class="game-title">🔥 Faridabad</div>
+        <div class="card-group">
+            <div class="card">
+                <h2>Declare Result</h2>
+                <p>Set winning number for Faridabad.</p>
+                <a href="/admin/faridabaddeclare-result" class="btn">Declare</a>
+            </div>
+            <div class="card">
+                <h2>View All Bets</h2>
+                <p>Review Faridabad game bets history.</p>
+                <a href="/admin/faridabadall-bets" class="btn">View Bets</a>
+            </div>
+            <div class="card">
+                <h2>Manage Game</h2>
+                <p>Control Faridabad game schedule.</p>
+                <a href="/admin/games" class="btn">Manage</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- More games can be added below following the same structure -->
+
+</div>
+
+</body>
+</html>

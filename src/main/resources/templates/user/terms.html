@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms & Conditions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f2fe;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .note {
+            margin-top: 25px;
+            font-weight: bold;
+            color: #00f2fe;
+        }
+
+        .checkbox-area {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto 0;
+            background: #00f2fe;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 8px #00f2fe;
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.5;
+            transition: 0.3s;
+            width: fit-content;
+        }
+
+        .back-button.enabled {
+            pointer-events: auto;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .back-button {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Terms & Conditions</h1>
+
+<div class="content">
+    <p>10 Rs एकल जोड़ी भुगतान = 950 Rs</p>
+    <p>10 Rs हुर्रफ (A.B.) भुगतान = 95 Rs</p>
+    <p>भुगतान जमा करने का समय: 24x7</p>
+
+    <p class="note">गेम कैसे खेलनी है जानिए:</p>
+
+    <p><strong>दिसावर:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ रात 12.00 AM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p><strong>गली:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ रात 10.15 PM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p><strong>गाजियाबाद:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ शाम 7.15 PM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p><strong>फरीदाबाद:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ शाम 4.45 PM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p><strong>दिल्ली बाजार व ताज:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ दोपहर 1.45 PM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p><strong>श्रीगणेश:</strong> 1000 रूपये की जोड़ी व 1000 रूपये तक का हरुफ़ दोपहर 3.00 PM तक, उसके बाद 100 रूपये तक की ही जोड़ी व 500 रूपये तक हरुफ़ मान्य रहेगा। अन्यथा हमारी कोई जिम्मेदारी नहीं होगी।</p>
+
+    <p class="note">नोट: महीने की अंतिम तिथि पर सभी गेम्स का अवकाश रहेगा।</p>
+
+    <p><strong>Play:</strong> विड्रॉल का टाइम सुबह 6.00 से 12.00 तक होगा। और गेम का टाइम आउट होने के बाद अगर प्ले होता है तो वह नेक्स्ट डे के गेम में प्ले किया जाएगा।</p>
+
+    <div class="checkbox-area">
+        <label>
+            <input type="checkbox" id="agreeCheckbox">
+            मैंने ऊपर लिखी शर्तें पढ़ ली हैं और सहमत हूँ।
+        </label>
+    </div>
+
+    <a href="/home/homepage" id="backButton" class="back-button">Back to Home</a>
+</div>
+
+<script>
+    const checkbox = document.getElementById('agreeCheckbox');
+    const backBtn = document.getElementById('backButton');
+
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            backBtn.classList.add('enabled');
+        } else {
+            backBtn.classList.remove('enabled');
+        }
+    });
+</script>
+
+</body>
+</html>

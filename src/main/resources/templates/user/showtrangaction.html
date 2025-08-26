@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wallet History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #00f2fe;
+            color: white;
+
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #00f2fe;
+        }
+
+
+        .tab-button {
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-button:hover {
+            transform: scale(1.05);
+        }
+
+        .tab-active {
+            background-color: #00f2fe;
+            color: black;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        .tab-inactive {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid #00f2fe;
+        }
+
+        .table-header {
+            background-color: rgba(0,242,254,0.2);
+        }
+
+        .table-row {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .table-row:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="p-6">
+
+<div class="max-w-5xl mx-auto bg-white bg-opacity-5 p-6 rounded-xl shadow-md">
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
+    <h2 class="text-3xl font-bold mb-6 text-center text-white">My Wallet History</h2>
+
+    <div class="flex justify-center gap-4 mb-6">
+        <button onclick="toggleTab('transactions')" id="tab-transactions" class="tab-button tab-active">Transactions</button>
+        <button onclick="toggleTab('withdrawals')" id="tab-withdrawals" class="tab-button tab-inactive">Withdrawals</button>
+    </div>
+
+    <!-- Transactions Tab -->
+    <div id="transactions" class="tab-content">
+        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Transactions</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full border border-teal-400 text-white text-center">
+                <thead class="table-header">
+                <tr>
+                    <th class="p-2">Amount</th>
+                    <th class="p-2">UTR No.</th>
+                    <th class="p-2">Deposit Number</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Type</th>
+                    <th class="p-2">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="txn : ${transactions}" class="table-row border-b border-gray-500">
+                    <td class="p-2" th:text="${txn.amount}">₹0.00</td>
+                    <td class="p-2" th:text="${txn.UTRNumber}">UTR12345</td>
+                    <td class="p-2" th:text="${txn.depositNumber}">DEP123</td>
+                    <td class="p-2" th:text="${txn.status}">SUCCESS</td>
+                    <td class="p-2" th:text="${txn.type}">DEPOSIT</td>
+                    <td class="p-2" th:text="${#temporals.format(txn.createdAtl, 'dd-MM-yyyy HH:mm')}">12-07-2025 15:30</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Withdrawals Tab -->
+    <div id="withdrawals" class="tab-content hidden">
+        <h3 class="text-2xl font-semibold mb-4 text-green-300">Withdrawals</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full border border-green-400 text-white text-center">
+                <thead class="table-header">
+                <tr>
+                    <th class="p-2">Amount</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Withdraw Number</th>
+                    <th class="p-2">Type</th>
+                    <th class="p-2">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="wd : ${withdrawals}" class="table-row border-b border-gray-500">
+                    <td class="p-2" th:text="${wd.amount}">₹0.00</td>
+                    <td class="p-2" th:text="${wd.status}">PENDING</td>
+                    <td class="p-2" th:text="${wd.withdrawNumber}">WD123</td>
+                    <td class="p-2" th:text="${wd.type}">BANK</td>
+                    <td class="p-2" th:text="${#temporals.format(wd.createdAtl, 'dd-MM-yyyy HH:mm')}">12-07-2025 16:30</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+        // Remove active class from all buttons
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('tab-active');
+            btn.classList.add('tab-inactive');
+        });
+        // Show selected tab
+        document.getElementById(tabId).classList.remove('hidden');
+        document.getElementById('tab-' + tabId).classList.remove('tab-inactive');
+        document.getElementById('tab-' + tabId).classList.add('tab-active');
+    }
+</script>
+</body>
+</html>

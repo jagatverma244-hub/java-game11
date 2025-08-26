@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RoomStack Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-bottom: 2px solid #00f2fe;
+        }
+
+        .wallet-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 10px #00f2fe;
+            text-align: center;
+        }
+
+        .wallet-box h3 {
+            margin: 10px 0;
+        }
+
+        .wallet-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background: #00f2fe;
+            border: none;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 0 8px #00f2fe;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #00c3cc;
+            box-shadow: 0 0 12px #00f2fe;
+        }
+
+        .game-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        .game-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 12px #00f2fe;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .game-box:hover {
+            transform: scale(1.05);
+            background: rgba(0,242,254,0.2);
+        }
+        .game-box h3,
+        .game-box p {
+            color: white;
+        }
+
+
+        .bottom-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px 40px;
+        }
+
+        .top-right-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-btn, .tnc-btn {
+            background: #fff;
+            color: black;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00f2fe;
+            text-decoration: none;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            background: #fff;
+            color: black;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00f2fe;
+            text-decoration: none;
+        }
+        .winning-number {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background-color: #5bf464;
+            color: black;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 0 5px #00f2fe;
+        }
+        .game-box {
+            position: relative;
+        }
+
+
+        @media screen and (max-width: 600px) {
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .top-bar {
+                font-size: 1.3rem;
+                padding: 15px;
+            }
+
+            .wallet-box {
+                padding: 15px;
+            }
+
+            .game-box {
+                padding: 15px;
+            }
+
+            .profile-btn, .tnc-btn, .logout-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    Live Balance: ₹<span th:text="${user?.walletBalance ?: '0.00'}">0.00</span>
+</div>
+
+<a href="/user/logout" class="logout-btn">Logout</a>
+
+<div class="top-right-buttons">
+    <a href="/home/profile" class="profile-btn">Profile</a>
+    <a href="/home/terms" class="tnc-btn">T&C</a>
+</div>
+
+<div class="wallet-box">
+    <h3>Wallet</h3>
+    <p>Total Balance: ₹<span th:text="${user?.walletBalance ?: '0.00'}">0.00</span></p>
+    <div class="wallet-buttons">
+        <a href="/payment/deposit" class="btn">Deposit</a>
+        <a href="/home/showtrangaction" class="btn">Transaction</a>
+        <a href="/payment/withdraw" class="btn">Withdraw</a>
+    </div>
+</div>
+<div class="game-section">
+<!--delhi-->
+    <a href="/Delhi/delhigame" class="game-box">
+        <span class="winning-number" th:text="${delhiResult} ?: '--'"></span>
+        <h3>Delhi Bajar</h3>
+        <p>Click to Play</p>
+    </a>
+
+<!-- shri ganesh   -->
+    <a href="/game/game1" class="game-box">
+        <span class="winning-number" th:text="${ganeshResult} ?: '--'"></span>
+        <h3>Shri Ganesh</h3>
+        <p>Click to Play</p>
+    </a>
+
+<!--    Faridabad -->
+
+    <a href="/faridabad/faridabadgame" class="game-box">
+        <span class="winning-number" th:text="${faridabadResult} ?: '--'"></span>
+        <h3>Faridabad </h3>
+        <p>Click to Play</p>
+    </a>
+<!--    ghaziabad-->
+    <a href="/Goa/Goagame" class="game-box">
+        <span class="winning-number" th:text="${goaResult} ?: '--'"></span>
+        <h3>Ghaziabad </h3>
+        <p>Click to Play</p>
+    </a>
+
+    <a href="/gali/galigame" class="game-box">
+        <span class="winning-number" th:text="${galiResult} ?: '--'"></span>
+        <h3>Gali </h3>
+        <p>Click to Play</p>
+    </a>
+    <a href="/Disawar/Disawargame" class="game-box">
+        <span class="winning-number" th:text="${disawarResult} ?: '--'"></span>
+        <h3>Disawar </h3>
+        <p>Click to Play</p>
+    </a>
+</div>
+
+<div class="bottom-buttons">
+    <a href="/home/referral" class="btn">Referral</a>
+    <a href="/home/contact" class="btn">Contact</a>
+</div>
+
+</body>
+</html>
