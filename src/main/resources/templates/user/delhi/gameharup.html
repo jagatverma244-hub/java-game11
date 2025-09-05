@@ -412,7 +412,8 @@
 
         if (isAllowed) {
             document.getElementById('betModal').style.display = 'block';
-            document.getElementById('selectedNumber').value = number;
+            document.getElementById('selectedDigit').value = number;
+            document.getElementById('digitType').value = type;
             document.getElementById('timeErrorMsg').style.display = 'none'; // hide msg if previously shown
         } else {
             document.getElementById('timeErrorMsg').style.display = 'block';

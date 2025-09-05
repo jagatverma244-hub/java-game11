@@ -3,8 +3,6 @@ package com.javagame.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 
 
 public class BetRequest {
@@ -12,7 +10,6 @@ public class BetRequest {
     private Double amount;
     private String type;
 
-    // --- Getters & Setters ---
     public Integer getSelectedNumber() {
         return selectedNumber;
     }
@@ -27,6 +24,14 @@ public class BetRequest {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
 

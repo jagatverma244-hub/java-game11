@@ -162,18 +162,20 @@
 <!-- Bahar digits -->
 <h3>Choose Bahar (First Digit)</h3>
 <div class="numbers">
-    <button class="number-btn" th:each="i : ${#numbers.sequence(0,9)}"
+    <button class="number-btn"
+            th:each="i : ${#numbers.sequence(0,9)}"
             th:text="${i}"
-            th:onclick="'openModal(' + ${i} + ', \'BAHAR\')'">
+            th:onclick="|openModal(${i}, 'BAHAR')|">
     </button>
 </div>
 
 <!-- Under digits -->
 <h3>Choose Under (Second Digit)</h3>
 <div class="numbers">
-    <button class="number-btn" th:each="i : ${#numbers.sequence(0,9)}"
+    <button class="number-btn"
+            th:each="i : ${#numbers.sequence(0,9)}"
             th:text="${i}"
-            th:onclick="'openModal(' + ${i} + ', \'UNDER\')'">
+            th:onclick="|openModal(${i}, 'UNDER')|">
     </button>
 </div>
 
@@ -194,7 +196,7 @@
 </div>
 
 <script>
-    function openModal(number) {
+    function openModal(number, type) {
         const now = new Date();
         const hours = now.getHours();
         const minutes = now.getMinutes();
@@ -203,13 +205,14 @@
 
         if (isAllowed) {
             document.getElementById('betModal').style.display = 'block';
-            document.getElementById('selectedNumber').value = number;
-            document.getElementById('timeErrorMsg').style.display = 'none'; // hide msg if previously shown
+            document.getElementById('selectedDigit').value = number;
+            document.getElementById('digitType').value = type;  // ✅ FIX added
+            document.getElementById('timeErrorMsg').style.display = 'none';
         } else {
             document.getElementById('timeErrorMsg').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('timeErrorMsg').style.display = 'none';
-            }, 5000); // Hide message after 5 seconds
+            }, 5000);
         }
     }
 
